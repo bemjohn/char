@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0D0D0D"/>
+      <stop offset="50%" style="stop-color:#1A1A1A"/>
+      <stop offset="100%" style="stop-color:#0D0D0D"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" style="stop-color:#E85D2D;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#E85D2D;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <ellipse cx="960" cy="324" rx="600" ry="300" fill="url(#glow)"/>
+  <g opacity="0.03">
+    <path d="M200 600 Q400 400 600 600 T1000 600 T1400 600 T1800 600" stroke="#E85D2D" stroke-width="2" fill="none"/>
+    <path d="M100 800 Q350 550 600 800 T1100 800 T1600 800" stroke="#E85D2D" stroke-width="1.5" fill="none"/>
+  </g>
+  <text x="960" y="540" font-family="system-ui, sans-serif" font-size="48" font-weight="700" fill="#FFFFFF" text-anchor="middle" opacity="0.1">BETTER FOOD</text>
+  <text x="960" y="590" font-family="system-ui, sans-serif" font-size="24" font-weight="300" fill="#FFFFFF" text-anchor="middle" opacity="0.08">BETTER MOOD</text>
+</svg>

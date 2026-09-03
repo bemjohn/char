@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="burgerBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1A1A"/>
+      <stop offset="100%" style="stop-color:#0D0D0D"/>
+    </linearGradient>
+    <radialGradient id="bunTop" cx="50%" cy="30%" r="50%">
+      <stop offset="0%" style="stop-color:#D4A574"/>
+      <stop offset="100%" style="stop-color:#C49564"/>
+    </radialGradient>
+    <radialGradient id="bunBottom" cx="50%" cy="70%" r="40%">
+      <stop offset="0%" style="stop-color:#C49564"/>
+      <stop offset="100%" style="stop-color:#B48554"/>
+    </radialGradient>
+    <linearGradient id="patty" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#5D2E1E"/>
+      <stop offset="100%" style="stop-color:#3D1E10"/>
+    </linearGradient>
+    <linearGradient id="cheese" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#E6C200"/>
+    </linearGradient>
+    <linearGradient id="lettuce" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2E7D32"/>
+      <stop offset="100%" style="stop-color:#1B5E20"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#burgerBg)"/>
+  <ellipse cx="200" cy="80" rx="140" ry="25" fill="url(#bunTop)"/>
+  <ellipse cx="200" cy="220" rx="145" ry="22" fill="url(#bunBottom)"/>
+  <ellipse cx="200" cy="185" rx="135" ry="15" fill="url(#patty)"/>
+  <path d="M65 165 Q200 140 335 165 Q335 175 200 190 Q65 175 65 165" fill="url(#cheese)"/>
+  <path d="M70 185 Q200 155 330 185 Q330 200 200 210 Q70 200 70 185" fill="url(#lettuce)" opacity="0.9"/>
+  <ellipse cx="160" cy="70" rx="8" ry="4" fill="#FFFFFF" opacity="0.3"/>
+  <ellipse cx="240" cy="65" rx="6" ry="3" fill="#FFFFFF" opacity="0.2"/>
+  <ellipse cx="200" cy="200" rx="10" ry="3" fill="#FFD700" opacity="0.4"/>
+</svg>
