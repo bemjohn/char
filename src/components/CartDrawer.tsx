@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { X, Plus, Minus, Truck, User, MapPin, MessageSquare, CheckCircle } from 'lucide-react';
 import { useCart } from '@/hooks/useCart';
 import { RESTAURANT_WHATSAPP_NUMBER } from '@/lib/config';
@@ -184,6 +185,14 @@ ${delivery > 0 ? `*Delivery:* $${delivery.toFixed(2)}` : '*Delivery:* FREE'}
                   </>
                 )}
               </button>
+
+              <p className="text-xs text-white/40 text-center">
+                By placing an order, you agree to our{' '}
+                <Link href="/terms" className="underline hover:text-white/70 transition-colors">
+                  Terms &amp; Conditions
+                </Link>
+                .
+              </p>
             </div>
           )}
         </div>

@@ -63,9 +63,15 @@ export default function Footer() {
             <h4 className="font-semibold text-white mb-4 tracking-wider uppercase text-sm">LEGAL</h4>
             <nav aria-label="Legal links">
               <ul className="space-y-3">
-                {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((item) => (
-                  <li key={item}>
-                    <a href="#" className="text-white/50 hover:text-white transition-colors text-sm">{item}</a>
+                {[
+                  { href: '/terms', label: 'Terms & Conditions' },
+                  { href: '/privacy', label: 'Privacy Policy' },
+                  { href: '/delivery', label: 'Delivery Policy' },
+                  { href: '/refund-policy', label: 'Refunds & Cancellations' },
+                  { href: '#', label: 'Cookie Policy' },
+                ].map((item) => (
+                  <li key={item.label}>
+                    <Link href={item.href} className="text-white/50 hover:text-white transition-colors text-sm">{item.label}</Link>
                   </li>
                 ))}
               </ul>

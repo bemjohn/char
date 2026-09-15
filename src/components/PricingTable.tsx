@@ -7,6 +7,7 @@ import { PORTION_PRICING, type PricingCategory, type PricingItem } from '@/data/
 export default function PricingTable() {
   const { addItem } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedSizes, setSelectedSizes] = useState<Record<string, SizeKey>>({});
 
   const filteredCategories = PORTION_PRICING.map((cat) => ({
     ...cat,
@@ -16,7 +17,20 @@ export default function PricingTable() {
     ),
   })).filter((cat) => cat.items.length > 0);
 
-  const handleAddToCart = (item: PricingItem, size: string, price: string) => {
+  const SIZE_KEYS = ['2.5L', '3L', '5L', '7L'] as const;
+  type SizeKey = typeof SIZE_KEYS[number];
+
+  const getAvailableSizes = (item: PricingItem) => {
+    return SIZE_KEYS.filter((size) => item.sizes[size] !== '—');
+  };
+
+  const getDefaultSize = (item: PricingItem) => {
+    const available = getAvailableSizes(item);
+    return available.length > 0 ? available[0] : '2.5L';
+  };
+
+  const handleAddToCart = (item: PricingItem, size: SizeKey) => {
+    const price = item.sizes[size];
     if (price === '—') return;
     const numericPrice = parseInt(price.replace(/[₦,]/g, ''), 10);
     const menuItem = {
@@ -30,7 +44,11 @@ export default function PricingTable() {
     addItem(menuItem);
   };
 
-  const sizeColumns = ['2.5L', '3L', '5L', '7L'] as const;
+  const handleSizeChange = (itemName: string, size: SizeKey) => {
+    setSelectedSizes((prev) => ({ ...prev, [itemName]: size }));
+  };
+
+  const sizeColumns = SIZE_KEYS;
 
   return (
     <section id="pricing" className="py-24 px-6 bg-[#0D0D0D]">
@@ -78,40 +96,52 @@ export default function PricingTable() {
                       {sizeColumns.map((size) => (
                         <th key={size} className="text-right px-6 py-4 text-sm font-semibold tracking-wider uppercase text-white/60 w-32">{size}</th>
                       ))}
-                      <th className="text-right px-6 py-4 text-sm font-semibold tracking-wider uppercase text-white/60 w-36">Action</th>
+                      <th className="text-right px-6 py-4 text-sm font-semibold tracking-wider uppercase text-white/60 w-48">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {category.items.map((item, rowIndex) => (
-                      <tr key={item.name} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                        <td className="px-6 py-5 text-white font-medium">
-                          {item.name}
-                        </td>
-                        {sizeColumns.map((size) => (
-                          <td key={size} className="px-6 py-5 text-right text-white/70 font-mono text-sm">
-                            {item.sizes[size]}
+                    {category.items.map((item) => {
+                      const availableSizes = getAvailableSizes(item);
+                      const defaultSize = getDefaultSize(item);
+                      const currentSize = (selectedSizes[item.name] || defaultSize) as SizeKey;
+                      const currentPrice = item.sizes[currentSize];
+                      const numericPrice = currentPrice !== '—' ? parseInt(currentPrice.replace(/[₦,]/g, ''), 10) : 0;
+
+                      return (
+                        <tr key={item.name} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                          <td className="px-6 py-5 text-white font-medium">
+                            {item.name}
                           </td>
-                        ))}
-                        <td className="px-6 py-5 text-right">
-                          <div className="flex items-center justify-end gap-2">
-                            {sizeColumns.map((size) => (
-                              <button
-                                key={size}
-                                onClick={() => handleAddToCart(item, size, item.sizes[size])}
-                                disabled={item.sizes[size] === '—'}
-                                className={`px-3 py-1.5 text-xs font-bold tracking-wider uppercase rounded-lg transition-all ${
-                                  item.sizes[size] === '—'
-                                    ? 'bg-white/5 text-white/20 cursor-not-allowed'
-                                    : 'bg-[#E85D2D] text-black hover:bg-[#E85D2D]/90 hover:shadow-[0_4px_12px_rgba(232,93,45,0.4)] active:scale-[0.98]'
-                                }`}
+                          {sizeColumns.map((size) => (
+                            <td key={size} className="px-6 py-5 text-right text-white/70 font-mono text-sm">
+                              {item.sizes[size]}
+                            </td>
+                          ))}
+                          <td className="px-6 py-5 text-right">
+                            <div className="flex items-center justify-end gap-3">
+                              <select
+                                value={currentSize}
+                                onChange={(e) => handleSizeChange(item.name, e.target.value as SizeKey)}
+                                className="bg-[#1A1A1A] border border-white/10 text-white text-sm font-medium px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E85D2D] focus:border-transparent appearance-none cursor-pointer"
                               >
-                                {item.sizes[size] === '—' ? 'N/A' : 'Add'}
+                                {availableSizes.map((size) => (
+                                  <option key={size} value={size}>
+                                    {size} — {item.sizes[size]}
+                                  </option>
+                                ))}
+                              </select>
+                              <button
+                                onClick={() => handleAddToCart(item, currentSize)}
+                                disabled={currentPrice === '—'}
+                                className="px-4 py-2 bg-[#E85D2D] hover:bg-[#d44c1c] text-white font-medium rounded-lg transition-colors disabled:bg-white/10 disabled:text-white/30 disabled:cursor-not-allowed"
+                              >
+                                Add to Cart
                               </button>
-                            ))}
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
